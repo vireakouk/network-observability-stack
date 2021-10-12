@@ -90,13 +90,13 @@ For Nautobot, please follow the instruction in official documentation to create 
 
 Verify or login to each app via the following URLs:
 
-| App           | URL                             | Default credentials                                         |
-| ------------- | ------------------------------- | ----------------------------------------------------------- |
+| App           | URL                          | Default credentials                                         |
+| ------------- | ---------------------------- | ----------------------------------------------------------- |
 | Nautobot      | http://hostip:8000/          | superuser account created in the above step                 |
 | Prometheus    | http://hostip:9090/          | N/A                                                         |
-| Loki/Promtail | N/A                             | Loki & Promtail have no interface. Integrated with Grafana  |
+| Loki/Promtail | N/A                          | Loki & Promtail have no interface. Integrated with Grafana  |
 | Telegraf      | http://hostip::9001/metrics  | This is a metric page where Prometheus scrape.              |
-| Grafana       | http://hostip:3000/          | visualizer for metric and logs from Prometheus and Loki     |
+| Grafana       | http://hostip:3000/          | admin/admin                                                 |
 | Alertmanager  | http://hostip:9093/          | N/A                                                         |
 | cAdvisor      | http://hostip:8080/          | N/A                                                         |
 

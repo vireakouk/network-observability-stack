@@ -183,8 +183,3 @@ services:
       - postgres-data:/var/lib/postgresql/data
     restart: unless-stopped
   # --------------------------------- #
-
-
-
-
-

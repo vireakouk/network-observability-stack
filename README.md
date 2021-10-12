@@ -4,7 +4,7 @@
 I want a quick way to spin up all network observability stack to monitor and document my networking labs with one command. 
 
 ## Stack
-In order to monitor my lab, I need the following tools:
+In order to document and monitor my lab, I need the following tools:
 
 | App           | Version | Description                                                 |
 | ------------- | ------- | ----------------------------------------------------------- |
@@ -22,7 +22,7 @@ Please ensure you have the following installed in your host or VM.
 - Docker (https://docs.docker.com/get-docker/)
 - Docker-compose (https://docs.docker.com/compose/install/)
 
-My host is Ubuntu Server 20.04 LTS x86_64 with 32GB RAM running in VirtualBox (Windows 10 Pro). This stack only consumes a bit less than 2GB of RAM.
+My host is Ubuntu Server 20.04 LTS x86_64 with 32GB RAM running in VirtualBox (Windows 10 Pro). This stack only consumes a bit less than 2GB of RAM before adding the data.
 
 ## Getting started
 Clone the repo
@@ -50,7 +50,7 @@ cd network-observability-stack
 ```
 Bring everything up with:
 ```
-sudo docker-compose up -d
+❯ sudo docker-compose up -d
 Starting loki       ... done
 Starting promtail   ... done
 Starting redis           ... done                                                                                                                                                                                 Starting postgres   ... done
@@ -66,7 +66,7 @@ Starting celery_worker   ... done
 ### Verify the stack
 Check if all the apps are running properly:
 ```
-~/projects/network-observability-stack master* ❯ sudo docker-compose ps
+❯ sudo docker-compose ps
      Name                    Command                   State                                              Ports
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 alertmanager      /bin/alertmanager --config ...   Up               0.0.0.0:9093->9093/tcp,:::9093->9093/tcp
@@ -82,7 +82,6 @@ promtail          /usr/bin/promtail --config ...   Up
 redis             docker-entrypoint.sh sh -c ...   Up               6379/tcp
 telegraf          /entrypoint.sh --config=/e ...   Up               8092/udp, 8094/tcp, 8125/udp, 0.0.0.0:9001->9001/tcp,:::9001->9001/tcp
 
-~/projects/network-observability-stack master* ❯
 ```
 * not sure why nautobot-worker show `unhealthy` state. Will try to find out later!.
 
@@ -93,17 +92,18 @@ Verify or login to each app via the following URLs:
 
 | App           | URL                             | Default credentials                                         |
 | ------------- | ------------------------------- | ----------------------------------------------------------- |
-| Nautobot      | http://localhost:8000/          | superuser account created in the above step                 |
-| Prometheus    | http://localhost:9090/          | N/A                                                         |
+| Nautobot      | http://hostip:8000/          | superuser account created in the above step                 |
+| Prometheus    | http://hostip:9090/          | N/A                                                         |
 | Loki/Promtail | N/A                             | Loki & Promtail have no interface. Integrated with Grafana  |
-| Telegraf      | http://localhost::9001/metrics  | This is a metric page where Prometheus scrape.              |
-| Grafana       | http://localhost:3000/          | visualizer for metric and logs from Prometheus and Loki     |
-| Alertmanager  | http://localhost:9093/          | N/A                                                         |
-| cAdvisor      | http://localhost:8080/          | N/A                                                         |
+| Telegraf      | http://hostip::9001/metrics  | This is a metric page where Prometheus scrape.              |
+| Grafana       | http://hostip:3000/          | visualizer for metric and logs from Prometheus and Loki     |
+| Alertmanager  | http://hostip:9093/          | N/A                                                         |
+| cAdvisor      | http://hostip:8080/          | N/A                                                         |
+
+Replace the host ip with `localhost` or appropriate docker host IP.
 
 ## Production consideration
-This stack is meant for testing and lab environment. For production, please consider using Docker Swarm or Kubernetes which will take care of security, long-term storage, scalability, high-availability, and disaster recovery. That's the topic for another day (learning those myself).
-
+This stack is meant for testing and for lab environment. For production, please consider using Docker Swarm or Kubernetes which will take care of security, long-term storage, scalability, high-availability, and disaster recovery. That's the topic for another day (learning those myself).
 
 ## References
 Apart from the official documentations, the following repos helped me put together this compose:
